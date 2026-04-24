@@ -10,15 +10,15 @@ MAXSIZE = 100 # Print matrices with less or this many entries as dense
 
 class Qobj():
     """
-    Qobj: Quantum mechanical OBJects
+    Qobj: Quantum mechanical Objects
 
     Class of which all operators and states are instances.
 
     Attributes
     ----------
-    data: scipy.sparse.csr_matrix
+    data : scipy.sparse.csr_matrix
         Sparse matrix in CSR format defining entries of state or operator.
-    shape: tuple
+    shape : tuple
         Tuple (m, n), where m is the number of rows and n is the number of
         columns.
     """
@@ -31,16 +31,13 @@ class Qobj():
 
         Parameters
         ----------
-        self: Qobj
+        self : Qobj
             Quantum object.
-        data: scipy.sparse.csr_matrix
+        data : scipy.sparse.csr_matrix
             Sparse matrix in CSR format defining entries of state or operator.
-        shape: tuple
+        shape : tuple
             Tuple (m, n), where m is the number of rows and n is the number of
             columns.
-
-        Returns
-        ----------
         """
         self.__check_validity(data, shape)
         self.shape = shape
@@ -52,12 +49,12 @@ class Qobj():
 
         Parameters
         ----------
-        self: Qobj
+        self : Qobj
             Quantum object.
 
         Returns
         ----------
-        _: Qobj
+        Qobj
             Copy of input.
         """
         return __class__.from_csr(self.data.copy())
@@ -68,12 +65,12 @@ class Qobj():
 
         Parameters
         ----------
-        self: Qobj
+        self : Qobj
             Quantum object.
 
         Returns
         ----------
-        txt: str
+        str
             String representing input.
         """
 
@@ -102,13 +99,10 @@ class Qobj():
 
         Parameters
         ----------
-        data: any
+        data : any
             Candidate for attribute 'data'.
-        shape: any
+        shape : any
             Candidate for attribute 'shape'.
-
-        Returns
-        ----------
         """
 
         # Check if data is a CSR matrix
@@ -129,14 +123,14 @@ class Qobj():
 
         Parameters
         ----------
-        cls: class
+        cls : class
             Class.
-        data: scipy.sparse.csr_matrix
+        data : scipy.sparse.csr_matrix
             Sparse matrix to convert into a quantum object.
 
         Returns
         ----------
-        _: Qobj
+        Qobj
             Resulting quantum object.
         """
         cls.__check_validity(data, data.shape)
@@ -153,14 +147,14 @@ class Qobj():
 
         Parameters
         ----------
-        cls: class
+        cls : class
             Class.
-        data: numpy.array
+        data : numpy.array
             Numpy array to convert into a quantum object.
 
         Returns
         ----------
-        _: Qobj
+        Qobj
             Resulting quantum object.
         """
         dt = scipy.sparse.coo_matrix(data).tocsr()
@@ -173,14 +167,14 @@ class Qobj():
 
         Parameters
         ----------
-        self: Qobj
+        self : Qobj
             First addend.
-        O: any
+        O : any
             Second addend.
 
         Returns
         ----------
-        _: Qobj
+        Qobj
             Sum.
         """
         if isinstance(O, __class__):
@@ -195,14 +189,14 @@ class Qobj():
 
         Parameters
         ----------
-        self: Qobj
+        self : Qobj
             Minuend.
-        O: any
+        O : any
             Subtrahend.
 
         Returns
         ----------
-        _: Qobj
+        Qobj
             Difference.
         """
         if isinstance(O, __class__):
@@ -217,14 +211,14 @@ class Qobj():
 
         Parameters
         ----------
-        self: Qobj
+        self : Qobj
             First factor.
-        X: any
+        X : any
             Second factor.
 
         Returns
         ----------
-        _: Qobj
+        Qobj
             Product.
         """
         if isinstance(X, __class__):
@@ -242,14 +236,14 @@ class Qobj():
 
         Parameters
         ----------
-        self: Qobj
+        self : Qobj
             First factor.
-        O: any
+        alpha : any
             Second factor.
 
         Returns
         ----------
-        _: Qobj
+        Qobj
             Product.
         """
         try:
@@ -264,14 +258,14 @@ class Qobj():
 
         Parameters
         ----------
-        self: Qobj
+        self : Qobj
             First numerator.
-        O: any
+        alpha : any
             Second denominator.
 
         Returns
         ----------
-        _: Qobj
+        Qobj
             Fraction.
         """
         try:
@@ -286,14 +280,14 @@ class Qobj():
 
         Parameters
         ----------
-        self: Qobj
+        self : Qobj
             Base.
-        n: int
+        n : int
             Power.
 
         Returns
         ----------
-        _: Qobj
+        Qobj
             Input quantum object to the power of n.
         """
 
@@ -315,12 +309,9 @@ class Qobj():
 
 class CQobj:
     """
-    CQobj: Constructors for Quantum OBJects
+    CQobj: Constructors for Quantum Objects
 
     Collection of constructors for quantum objects.
-
-    Attributes
-    ----------
     """
 
     def zero(nrows: int,
@@ -330,15 +321,15 @@ class CQobj:
 
         Parameters
         ----------
-            nrows: int
-                Number of rows.
-            ncols: int
-                Number of columns.
+        nrows : int
+            Number of rows.
+        ncols : int
+            Number of columns.
 
         Returns
         ----------
-            _: Qobj
-                Zero operator.
+        Qobj
+            Zero operator.
         """
         if not nrows*ncols:
             message = "PYQUANT: DIMENSION CANNOT BE ZERO"
@@ -352,13 +343,13 @@ class CQobj:
 
         Parameters
         ----------
-            dim: int
-                Dimension of identity.
+        dim : int
+            Dimension of identity.
 
         Returns
         ----------
-            _: Qobj
-                Identity operator.
+        Qobj
+            Identity operator.
         """
         E = scipy.sparse.identity(dim,
                                   dtype=numpy.complex128,
@@ -371,12 +362,12 @@ class CQobj:
 
         Parameters
         ----------
-        dim: int
+        dim : int
             Dimension of annihilation operator.
 
         Returns
         ----------
-        _: Qobj
+        Qobj
             Annihilation operator.
         """
 
@@ -399,12 +390,12 @@ class CQobj:
 
         Parameters
         ----------
-        dim: int
+        dim : int
             Dimension of creation operator.
 
         Returns
         ----------
-        _: Qobj
+        Qobj
             Creation operator.
         """
 
@@ -426,12 +417,12 @@ class CQobj:
 
         Parameters
         ----------
-        dim: int
+        dim : int
             Dimension of number operator.
 
         Returns
         ----------
-        _: Qobj
+        Qobj
             Number operator.
         """
 
@@ -454,12 +445,12 @@ class CQobj:
 
         Parameters
         ----------
-        which: str
+        which : str
             Either 'x', 'y' or 'z'.
 
         Returns
         ----------
-        _: Qobj
+        Qobj
             Pauli matrix.
         """
 
@@ -487,17 +478,16 @@ class CQobj:
 
         Parameters
         ----------
-        dim: int
+        dim : int
             Dimension of projector.
-        n: int
+        n : int
             Subspace n = 1, ..., dim.
 
         Returns
         ----------
-        _: Qobj
-                                 1 0 0
-            dim = 3 and n = 1 => 0 0 0
-                                 0 0 0
+        Qobj
+            Resulting projection operator. For example, if dim = 3 and n = 1, the
+            result is a 3x3 matrix with 1 at (0,0) and 0 elsewhere.
         """
 
         # Get entry and shape
@@ -519,16 +509,16 @@ class CQobj:
 
         Parameters
         ----------
-        dim: int
+        dim : int
             Truncation dimension of Fock space.
-        n: int
+        n : int
             Excitation number, n = 0, ..., dim-1.
-        which: str
+        which : str
             Either 'bra' or 'ket'.
 
         Returns
         ----------
-        _: Qobj
+        Qobj
             Truncated Fock state <n| or |n>.
         """
 
@@ -556,20 +546,20 @@ class CQobj:
              ns: list,
              which: str) -> "Qobj":
         """
-        Fock state
+        Fock state.
 
         Parameters
         ----------
-        dim: int
+        dim : int
             Truncation dimension of each mode.
-        ns: list
+        ns : list
             ns = [n1, ..., nN], ni = 0, ..., dim-1; N: number of modes.
-        which: str
+        which : str
             Either 'bra' or 'ket'.
 
         Returns
         ----------
-        _: Qobj
+        Qobj
             Fock state.
         """
         result = CQobj.smfock(dim, ns[0], which).data
@@ -585,16 +575,16 @@ class CQobj:
 
         Parameters
         ----------
-        dim: int
+        dim : int
             Truncation dimension of Fock space.
-        alpha: numpy.complex128
+        alpha : numpy.complex128
             Coherent state amplitude.
-        which: str
+        which : str
             Either 'bra' or 'ket'.
 
         Returns
         ----------
-        _: Qobj
+        Qobj
             Coherent state in basis of Fock states.
         """
         result = CQobj.zero(dim, 1)
@@ -613,16 +603,16 @@ class CQobj:
 
         Parameters
         ----------
-        dim: int
+        dim : int
             Dimension.
-        n: int
+        n : int
             Position of entry, n = 1, ..., dim.
-        which: str
+        which : str
             Either 'bra' or 'ket'.
 
         Returns
         ----------
-        _: Qobj
+        Qobj
             Standard basis vector (ket), or the dual one (bra).
         """
         return CQobj.smfock(dim, n-1, which)
@@ -634,16 +624,16 @@ class CQobj:
 
         Parameters
         ----------
-        dim: int
+        dim : int
             Truncation dimension of each mode.
-        number_of_modes: int
+        number_of_modes : int
             Number of modes.
 
         Returns
         ----------
-        _: list
-            List of annihilation operators.
-            Example: number_of_modes = 2 returns [a x 1, 1 x a]
+        list
+            List of annihilation operators. Example: number_of_modes = 2 returns
+            [a x 1, 1 x a].
         """
 
         # Single mode annihilator
@@ -672,16 +662,16 @@ class CQobj:
 
         Parameters
         ----------
-        dim: int
+        dim : int
             Truncation dimension of each mode.
-        number_of_modes: int
+        number_of_modes : int
             Number of modes.
 
         Returns
         ----------
-        _: list
-            List of creation operators.
-            Example: number_of_modes = 2 returns [a x 1, 1 x a]
+        list
+            List of creation operators. Example: number_of_modes = 2 returns
+            [a x 1, 1 x a].
         """
 
         # Single mode creator
@@ -710,16 +700,16 @@ class CQobj:
 
         Parameters
         ----------
-        dim: int
+        dim : int
             Truncation dimension of each mode.
-        number_of_modes: int
+        number_of_modes : int
             Number of modes.
 
         Returns
         ----------
-        _: list
-            List of number operators.
-            Example: number_of_modes = 2 returns [a x 1, 1 x a]
+        list
+            List of number operators. Example: number_of_modes = 2 returns
+            [a x 1, 1 x a].
         """
 
         # Single mode number operator
@@ -747,12 +737,12 @@ class CQobj:
 
         Parameters
         ----------
-        dim: int
+        dim : int
             Number of basis vectors.
 
         Returns
         ----------
-        _: list
+        list
             List of the dim-dimensional standard basis vectors e1, ..., edim.
         """
 
@@ -772,12 +762,9 @@ class CQobj:
 
 class OQobj:
     """
-    OQobj: Operations on Quantum OBJects
+    OQobj: Operations on Quantum Objects
 
     Collection of operations on quantum objects.
-
-    Attributes
-    ----------
     """
 
     def dagger(O: "Qobj") -> "Qobj":
@@ -786,11 +773,12 @@ class OQobj:
 
         Parameters
         ----------
-        O: Qobj
+        O : Qobj
             Quantum object.
 
         Returns
         ----------
+        Qobj
             Hermitian conjugate of input.
         """
         return Qobj.from_csr(O.data.getH().tocsr())
@@ -801,12 +789,12 @@ class OQobj:
 
         Parameters
         ----------
-        Os: list
+        Os : list
             List of quantum objects.
 
         Returns
         ----------
-        _: Qobj
+        Qobj
             Tensor product of the input list's elements, from left to right.
         """
         result = Os[0].data
@@ -820,16 +808,13 @@ class OQobj:
 
         Parameters
         ----------
-        ket: Qobj
+        ket : Qobj
             Ket state.
-
-        _: Qobj
-            Dyad |ket><ket|.
 
         Returns
         ----------
-        _: Qobj
-            Dyadic product of the input state with itself.
+        Qobj
+            Dyadic product of the input state with itself, i.e., |ket><ket|.
         """
         if ket.shape[1] != 1:
             message = "PYQUANT: DYADIC PRODUCT IS ONLY DEFINED FOR A KET STATE"
@@ -845,14 +830,14 @@ class OQobj:
 
         Parameters
         ----------
-        phi: Qobj
+        phi : Qobj
             Ket state.
-        psi: Qobj
+        psi : Qobj
             Ket state.
 
         Returns
         ----------
-        _: numpy.complex128
+        complex128
             Scalar product between input states.
         """
         if phi.shape == psi.shape and phi.shape[1] == 1:
@@ -867,12 +852,12 @@ class OQobj:
 
         Parameters
         ----------
-        O: Qobj
+        O : Qobj
             Operator.
 
         Returns
         ----------
-        _: numpy.complex128
+        complex128
             Trace of the operator given as input.
         """
         if O.shape[0] == O.shape[1]:
@@ -889,16 +874,16 @@ class OQobj:
 
         Parameters
         ----------
-        dim1: int
+        dim1 : int
             Dimension of identity before O.
-        O: Qobj
+        O : Qobj
             Operator.
-        dim2: int
+        dim2 : int
             Dimension of identity after O.
 
         Returns
         ----------
-        _: Qobj:
+        Qobj
             Tensor product of Edim1, A, and Edim2, in that order.
         """
 
@@ -917,32 +902,29 @@ class OQobj:
         else:
             return OQobj.tp([CQobj.one(dim1), O, CQobj.one(dim2)])
 
-class SPEC:
+class Spec:
     """
-    SPEC: SPECtra
+    Spec: Spectra
 
     Class of methods to compute spectra.
-
-    Attributes
-    ----------
     """
 
     def __check_square_compute_all(O: "Qobj",
                                    howmany: (int, str)) -> bool:
         """
-        Check if matrix is square and all eigenvalues and eigenvectors ought to
-        be computed.
+        Check if matrix is square and all eigenvalues and eigenvectors
+        ought to be computed.
 
         Parameters
         ----------
-        O: Qobj
+        O : Qobj
             Quantum object.
-        howmany: int, str
+        howmany : int, str
             Number of eigenvalues and eigenvectors to compute; can be "all".
 
         Returns
         ----------
-        _: bool
+        bool
             'True' if all eigenvalues and eigenvectors ought to be computed, and
             'False' otherwise.
         """
@@ -968,38 +950,38 @@ class SPEC:
 
         Parameters
         ----------
-        O: Qobj
+        O : Qobj
             Symmetric operator. It is assumed that the imaginary part is zero,
             but there is NO INTERNAL CHECK, i.e., it is the caller's
             responsibility.
-        get_states: bool
+        get_states : bool
             Decide if eigenvectors are computed.
-        which: str
+        which : str
             LM: largest magnitude
             SM: smallest magnitude
             LA: largest algebraic
             SA: smallest algebraic
             BE: k/2 from high and k/2 from low end
-        sigma: numpy.float64
+        sigma : float64
             Shift for shift-and-invert mode of ARPACK. If 'None', no shift is
             used. Typically, one needs to use shift-and-invert mode to speed up
             the calculation of smallest magnitude eigenvalues, because 'SM'
             itself is very slow for large matrices.
-        howmany: int, str
+        howmany : int, str
             Number of eigenvalues and eigenvectors ought to be computed; can be
             'all'.
 
         Returns
         ----------
-        energies: numpy.array
+        ndarray
             Numpy array containing eigenvalues.
-        states: (list, numpy.array)
+        ndarray
             Numpy array containing states. The states have dimension (dim,) and
             are dense, not sparse. If get_states is False, states = [].
         """
 
         # Check for 'all' eigenvalues and eigenvectors and check if O is square
-        get_all = SPEC.__check_square_compute_all(O, howmany)
+        get_all = Spec.__check_square_compute_all(O, howmany)
 
         # Get the real part, because it is assumed that Im(O)=0!
         Oreal = O.data.real
@@ -1034,36 +1016,36 @@ class SPEC:
 
         Parameters
         ----------
-        O: Qobj
+        O : Qobj
             Hermitian operator.
-        get_states: bool
+        get_states : bool
             Decide if eigenvectors are computed.
-        which: str
+        which : str
             LM: largest magnitude
             SM: smallest magnitude
             LA: largest algebraic
             SA: smallest algebraic
             BE: k/2 from high and k/2 from low end
-        sigma: numpy.float64
+        sigma : float64
             Shift for shift-and-invert mode of ARPACK. If 'None', no shift is
             used. Typically, one needs to use shift-and-invert mode to speed up
             the calculation of smallest magnitude eigenvalues, because "SM"
             itself is very slow for large matrices.
-        howmany: int, str
+        howmany : int, str
             Number of eigenvalues and eigenvectors ought to be computed; can be
             'all'.
 
         Returns
         ----------
-        energies: numpy.array
+        ndarray
             Numpy array containing eigenvalues.
-        states: (list, numpy.array)
+        ndarray
             Numpy array containing states. The states have dimension (dim,) and
             are dense, not sparse. If get_states is False, states = [].
         """
 
         # Check for 'all' eigenvalues and eigenvectors and check if O is square
-        get_all = SPEC.__check_square_compute_all(O, howmany)
+        get_all = Spec.__check_square_compute_all(O, howmany)
 
         # Compute eigenvalues and eigenvectors
         if get_all:
@@ -1095,38 +1077,38 @@ class SPEC:
 
         Parameters
         ----------
-        O: Qobj
+        O : Qobj
             Real operator. It is assumed that the imaginary part is zero, but
             there is NO INTERNAL CHECK, i.e., it is the caller's responsibility.
-        get_states: bool
+        get_states : bool
             Decide if eigenvectors are computed.
-        which: str
+        which : str
             LM: largest magnitude
             SM: smallest magnitude
             LR: largest real part
             SR: smallest real part
             LI: largest imaginary part
             SI: smallest imaginary part
-        sigma: numpy.float64
+        sigma : float64
             Shift for shift-and-invert mode of ARPACK. If 'None', no shift is
             used. Typically, one needs to use shift-and-invert mode to speed up
             the calculation of smallest magnitude eigenvalues, because "SM"
             itself is very slow for large matrices.
-        howmany: int, str
+        howmany : int, str
             Number of eigenvalues and eigenvectors ought to be computed; can be
             'all'.
 
         Returns
         ----------
-        energies: numpy.array
+        ndarray
             Numpy array containing eigenvalues.
-        states: (list, numpy.array)
+        ndarray
             Numpy array containing states. The states have dimension (dim,) and
             are dense, not sparse. If get_states is False, states = [].
         """
 
         # Check for 'all' eigenvalues and eigenvectors and check if O is square
-        get_all = SPEC.__check_square_compute_all(O, howmany)
+        get_all = Spec.__check_square_compute_all(O, howmany)
 
         # Get the real part, because it is assumed that Im(O)=0!
         Oreal = O.data.real
@@ -1161,37 +1143,37 @@ class SPEC:
 
         Parameters
         ----------
-        O: Qobj
+        O : Qobj
             Operator.
-        get_states: bool
+        get_states : bool
             Decide if eigenvectors are computed.
-        which: str
+        which : str
             LM: largest magnitude
             SM: smallest magnitude
             LR: largest real part
             SR: smallest real part
             LI: largest imaginary part
             SI: smallest imaginary part
-        sigma: numpy.float64
+        sigma : float64
             Shift for shift-and-invert mode of ARPACK. If 'None', no shift is
             used. Typically, one needs to use shift-and-invert mode to speed up
             the calculation of smallest magnitude eigenvalues, because "SM"
             itself is very slow for large matrices.
-        howmany: int, str
+        howmany : int, str
             Number of eigenvalues and eigenvectors ought to be computed; can be
             'all'.
 
         Returns
         ----------
-        energies: numpy.array
+        ndarray
             Numpy array containing eigenvalues.
-        states: (list, numpy.array)
+        ndarray
             Numpy array containing states. The states have dimension (dim,) and
             are dense, not sparse. If get_states is False, states = [].
         """
 
         # Check for 'all' eigenvalues and eigenvectors and check if O is square
-        get_all = SPEC.__check_square_compute_all(O, howmany)
+        get_all = Spec.__check_square_compute_all(O, howmany)
 
         # Compute eigenvalues and eigenvectors
         if get_all:
@@ -1215,12 +1197,9 @@ class SPEC:
 
 class TEvol:
     """
-    TEvol: Time EVOLution
+    TEvol: Time Evolution
 
-    Class of methods to compute time evolution.
-
-    Attributes
-    ----------
+    Class of methods to compute time evolution
     """
 
     def __action_of_hamiltonian(h0: scipy.sparse.csr_matrix,
@@ -1233,16 +1212,20 @@ class TEvol:
 
         Parameters
         ----------
-        h0: scipy.sparse.csr_matrix
+        h0 : scipy.sparse.csr_matrix
             Hamiltonian as sparse CSR matrix.
-        hs: list
+        hs : list
             List of sparse hermitian CSR matrices.
-        fs: list
+        fs : list
             List of scalar functions depending on time.
+        t : float64
+            Time point.
+        psi : ndarray
+            Current state.
 
         Returns
         ----------
-        _: numpy.array
+        ndarray
             Resulting state.
         """
         H = h0
@@ -1262,26 +1245,26 @@ class TEvol:
 
         Parameters
         ----------
-        h0: scipy.sparse.csr_matrix
+        h0 : scipy.sparse.csr_matrix
             Hamiltonian as sparse CSR matrix.
-        hs: list
+        hs : list
             List of sparse hermitian CSR matrices.
-        fs: list
+        fs : list
             List of scalar functions depending on time.
-        Llst: list
+        Llst : list
             List of scaled jump operators: sqrt(gamma_i)Li, with the rate gammai
             associated to the jump operator Li. sqrt(gamma_1)L_1,
             sqrt(gamma_2)L_2, ... must be quantum objects.
-        t: numpy.float64
+        t : float64
             Time point.
-        rho: numpy.array
+        rho : ndarray
             Current state.
-        shape: tuple
+        shape : tuple
             Shape of current state.
 
         Returns
         ----------
-        _: numpy.array
+        ndarray
             Resulting state.
         """
 
@@ -1319,35 +1302,33 @@ class TEvol:
 
         Parameters
         ----------
-        H: Qobj
+        H : Qobj
             Quantum object representing the time-independent Hamiltonian.
-        psi0: Qobj
+        psi0 : Qobj
             Initial state.
-        times: numpy.array
+        times : ndarray
             Time points of interest.
-        get_states: bool, str
-            Decide if states are saved and returned.
-            If equal to "final", only the final state is saved.
-        observables: list
+        get_states : bool, str
+            Decide if states are saved and returned. If equal to "final", only
+            the final state is saved.
+        observables : list
             Observables to compute expectation values from, at each specified
             time point. Observables can be time-dependent using the same
             formatting as for Hlst in the method 'uevol_ode'.
-        print_info: bool
+        print_info : bool
             If 'True', print information on integration process.
 
         Returns
         ----------
-        times: numpy.array
+        ndarray
             Numpy array containing time points (same as argument 'times').
-        states: numpy.array
+        ndarray
             Numpy array containing states. The states have dimension (dim,) and
             are dense, not sparse. If get_states is False, states = [].
-        expects: list
+        list
             List of numpy arrays containing the expectation-value time series
             for each specified observable, i.e., a list of the form
-
-                [ <observable 1>, ..., <observable last> ] .
-
+            [ <observable 1>, ..., <observable last> ].
         """
 
         # Check if only final state is desired
@@ -1438,50 +1419,41 @@ class TEvol:
 
         Parameters
         ----------
-        Hls: list
+        Hlst : list
             List of quantum objects representing the (potentially time-dependent
-            potential).
-            The format is
-
-                Hlst = [ H0, [f1, H1], [f2, H2], ... ] ,
-
+            potential). The format is Hlst = [ H0, [f1, H1], [f2, H2], ... ],
             where H0, H1, H2 are hermitian operators and f1, f2, ... are scalar
             functions of time. The Hamiltonian is constructed as follows:
-
-                   Htot(t) = H0 + f(1)*H1 + f2(t)*H2 + ... .
-
-            Note that Hlst = [ H0 ] is valid and yields a time-independent
-            Hamiltonian.
-        psi0: Qobj
+            Htot(t) = H0 + f(1)*H1 + f2(t)*H2 + ... . Note that Hlst = [ H0 ] is
+            valid and yields a time-independent Hamiltonian.
+        psi0 : Qobj
             Initial state.
-        times: numpy.array
+        times : ndarray
             Time points of interest.
-        get_states: bool, str
-            Decide if states are saved and returned.
-            If equal to "final", only the final state is saved.
-        is_stiff: bool
+        get_states : bool, str
+            Decide if states are saved and returned. If equal to "final", only
+            the final state is saved.
+        is_stiff : bool
             Decide if ODE system is stiff, i.e., if 'BDF' is used, instead of
             'adams'.
-        observables: list
+        observables : list
             Observables to compute expectation values from, at each specified
             time point. Observables can be time-dependent using the same
             formatting as for Hlst.
-        print_info: bool
+        print_info : bool
             If 'True', print information on integration process.
 
         Returns
         ----------
-        times: numpy.array
+        ndarray
             Numpy array containing time points (same as argument 'times').
-        states: numpy.array
+        ndarray
             Numpy array containing states. The states have dimension (dim,) and
             are dense, not sparse. If get_states is False, states = [].
-        expects: list
+        list
             List of numpy arrays containing the expectation-value time series
             for each specified observable, i.e., a list of the form
-
-                [ <observable 1>, ..., <observable last> ] .
-
+            [ <observable 1>, ..., <observable last> ].
         """
 
         # Check if only final state is desired
@@ -1605,54 +1577,45 @@ class TEvol:
 
         Parameters
         ----------
-        Hls: list
+        Hlst : list
             List of quantum objects representing the (potentially time-dependent
-            potential).
-            The format is
-
-                Hlst = [ H0, [f1, H1], [f2, H2], ... ] ,
-
+            potential). The format is Hlst = [ H0, [f1, H1], [f2, H2], ... ],
             where H0, H1, H2 are hermitian operators and f1, f2, ... are scalar
             functions of time. The Hamiltonian is constructed as follows:
-
-                   Htot(t) = H0 + f(1)*H1 + f2(t)*H2 + ... .
-
-            Note that Hlst = [ H0 ] is valid and yields a time-independent
-            Hamiltonian.
-        Llst: list
+            Htot(t) = H0 + f(1)*H1 + f2(t)*H2 + ... . Note that Hlst = [ H0 ] is
+            valid and yields a time-independent Hamiltonian.
+        Llst : list
             List of scaled jump operators: sqrt(gamma_i)Li, with the rate gammai
             associated to the jump operator Li. sqrt(gamma_1)L_1,
             sqrt(gamma_2)L_2, ... must be quantum objects.
-        rho0: Qobj
+        rho0 : Qobj
             Initial state.
-        times: numpy.array
+        times : ndarray
             Time points of interest.
-        get_states: bool, str
-            Decide if states are saved and returned.
-            If equal to "final", only the final state is saved.
-        is_stiff: bool
+        get_states : bool, str
+            Decide if states are saved and returned. If equal to "final", only
+            the final state is saved.
+        is_stiff : bool
             Decide if ODE system is stiff, i.e., if 'BDF' is used, instead of
             'adams'.
-        observables: list
+        observables : list
             Observables to compute expectation values from, at each specified
             time point. Observables can be time-dependent using the same
             formatting as for Hlst.
-        print_info: bool
+        print_info : bool
             If 'True', print information on integration process.
 
         Returns
         ----------
-        times: numpy.array
+        ndarray
             Numpy array containing time points (same as argument 'times').
-        states: numpy.array
+        ndarray
             Numpy array containing states. The states have dimension (dim,) and
             are dense, not sparse. If get_states is False, states = [].
-        expects: list
+        list
             List of numpy arrays containing the expectation-value time series
             for each specified observable, i.e., a list of the form
-
-                [ <observable 1>, ..., <observable last> ] .
-
+            [ <observable 1>, ..., <observable last> ].
         """
 
         # Check if only final state is desired
@@ -1773,9 +1736,6 @@ class QOPS:
     QOPS: Quantum Optical Phase Space
 
     Class of methods to work with quantum optical phase space quantities.
-
-    Attributes
-    ----------
     """
 
     def wigner_fock(rho: "Qobj",
@@ -1786,14 +1746,14 @@ class QOPS:
 
         Parameters
         ----------
-        rho: Qobj
+        rho : Qobj
             State in Fock basis.
-        alpha:
+        alpha : complex128
             Argument of Wigner quasiprobability distribution.
 
         Returns
         ----------
-        result: numpy.float64
+        float64
             Value of Wigner quasiprobability distribution.
         """
 
