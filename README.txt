@@ -1,5 +1,5 @@
 +------------------------------------------------------------------------------+
-| PYQUANT: Simple PYthon package for the simulation of QUANTum systems         |
+| pyquant: Simple PYthon package for the simulation of QUANTum systems         |
 |                                                                              |
 | Author of this file: Simon Euchner                                           |
 +------------------------------------------------------------------------------+
