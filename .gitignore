@@ -1,0 +1,9 @@
+# Cache
+__pycache__/
+
+# Build
+build/
+*.egg-info/
+
+# Environment
+.venv

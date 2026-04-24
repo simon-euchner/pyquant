@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyquant"
+version = "1.0"
+authors = [
+  { name="Simon Euchner" },
+]
+description = "Simple PYthon package for the simulation of QUANTum systems"
+readme = "README.txt"
+requires-python = ">=3.8"
+dependencies = [
+    "numpy",
+    "scipy",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
