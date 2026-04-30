@@ -8,9 +8,9 @@ import scipy
 EPSILON = 1e-14 # Assumed machine precision for 64-bit floating-point numbers
 MAXSIZE = 100 # Print matrices with less or this many entries as dense
 
-class Qobj():
+class QObj():
     """
-    Qobj: Quantum mechanical Objects
+    QObj: Quantum mechanical Objects
 
     Class of which all operators and states are instances.
 
@@ -23,7 +23,7 @@ class Qobj():
         columns.
     """
 
-    def __init__(self: "Qobj",
+    def __init__(self: "QObj",
                  data: scipy.sparse.csr_matrix,
                  shape: tuple) -> None:
         """
@@ -31,7 +31,7 @@ class Qobj():
 
         Parameters
         ----------
-        self : Qobj
+        self : QObj
             Quantum object.
         data : scipy.sparse.csr_matrix
             Sparse matrix in CSR format defining entries of state or operator.
@@ -43,29 +43,29 @@ class Qobj():
         self.shape = shape
         self.data = data
 
-    def copy(self: "Qobj") -> "Qobj":
+    def copy(self: "QObj") -> "QObj":
         """
         Copy a quantum object.
 
         Parameters
         ----------
-        self : Qobj
+        self : QObj
             Quantum object.
 
         Returns
         ----------
-        Qobj
+        QObj
             Copy of input.
         """
         return __class__.from_csr(self.data.copy())
 
-    def __str__(self: "Qobj") -> str:
+    def __str__(self: "QObj") -> str:
         """
         Text representation of a quantum object.
 
         Parameters
         ----------
-        self : Qobj
+        self : QObj
             Quantum object.
 
         Returns
@@ -76,7 +76,7 @@ class Qobj():
 
         # Format string
         txt = ( "\n"
-                "INSTANCE OF CLASS Qobj\n"
+                "INSTANCE OF CLASS QOBJ\n"
                 "SHAPE: {:d} x {:d}\n"
                 "DATA:\n"
                 "{}\n" )
@@ -117,9 +117,9 @@ class Qobj():
 
     @classmethod
     def from_csr(cls: "class",
-                 data: scipy.sparse.csr_matrix) -> "Qobj":
+                 data: scipy.sparse.csr_matrix) -> "QObj":
         """
-        Construct a Qobj from a sparse matrix in CSR format.
+        Construct a QObj from a sparse matrix in CSR format.
 
         Parameters
         ----------
@@ -130,7 +130,7 @@ class Qobj():
 
         Returns
         ----------
-        Qobj
+        QObj
             Resulting quantum object.
         """
         cls.__check_validity(data, data.shape)
@@ -141,9 +141,9 @@ class Qobj():
 
     @classmethod
     def from_array(cls: "class",
-                   data: numpy.array) -> "Qobj":
+                   data: numpy.array) -> "QObj":
         """
-        Construct a Qobj from a numpy array.
+        Construct a QObj from a numpy array.
 
         Parameters
         ----------
@@ -154,27 +154,27 @@ class Qobj():
 
         Returns
         ----------
-        Qobj
+        QObj
             Resulting quantum object.
         """
         dt = scipy.sparse.coo_matrix(data).tocsr()
         return cls.from_csr(dt)
 
-    def __add__(self: "Qobj",
-                O: any) -> "Qobj":
+    def __add__(self: "QObj",
+                O: any) -> "QObj":
         """
         Addition for quantum objects.
 
         Parameters
         ----------
-        self : Qobj
+        self : QObj
             First addend.
         O : any
             Second addend.
 
         Returns
         ----------
-        Qobj
+        QObj
             Sum.
         """
         if isinstance(O, __class__):
@@ -182,21 +182,21 @@ class Qobj():
         else:
             return NotImplemented
 
-    def __sub__(self: "Qobj",
-                O: any) -> "Qobj":
+    def __sub__(self: "QObj",
+                O: any) -> "QObj":
         """
         Subtraction for quantum objects.
 
         Parameters
         ----------
-        self : Qobj
+        self : QObj
             Minuend.
         O : any
             Subtrahend.
 
         Returns
         ----------
-        Qobj
+        QObj
             Difference.
         """
         if isinstance(O, __class__):
@@ -204,21 +204,21 @@ class Qobj():
         else:
             return NotImplemented
 
-    def __mul__(self: "Qobj",
-                X: any) -> "Qobj":
+    def __mul__(self: "QObj",
+                X: any) -> "QObj":
         """
         Multiplication and scalar multiplication from the right.
 
         Parameters
         ----------
-        self : Qobj
+        self : QObj
             First factor.
         X : any
             Second factor.
 
         Returns
         ----------
-        Qobj
+        QObj
             Product.
         """
         if isinstance(X, __class__):
@@ -229,21 +229,21 @@ class Qobj():
             except:
                 return NotImplemented
 
-    def __rmul__(self: "Qobj",
-                 alpha: any) -> "Qobj":
+    def __rmul__(self: "QObj",
+                 alpha: any) -> "QObj":
         """
         Scalar multiplication from the left.
 
         Parameters
         ----------
-        self : Qobj
+        self : QObj
             First factor.
         alpha : any
             Second factor.
 
         Returns
         ----------
-        Qobj
+        QObj
             Product.
         """
         try:
@@ -251,21 +251,21 @@ class Qobj():
         except:
             return NotImplemented
 
-    def __truediv__(self: "Qobj",
-                    alpha: any) -> "Qobj":
+    def __truediv__(self: "QObj",
+                    alpha: any) -> "QObj":
         """
-        Divide a Qobj by a scalar.
+        Divide a QObj by a scalar.
 
         Parameters
         ----------
-        self : Qobj
+        self : QObj
             First numerator.
         alpha : any
             Second denominator.
 
         Returns
         ----------
-        Qobj
+        QObj
             Fraction.
         """
         try:
@@ -273,21 +273,21 @@ class Qobj():
         except:
             return NotImplemented
 
-    def __pow__(self: "Qobj",
-                n: int) -> "Qobj":
+    def __pow__(self: "QObj",
+                n: int) -> "QObj":
         """
-        Integer power of a Qobj.
+        Integer power of a QObj.
 
         Parameters
         ----------
-        self : Qobj
+        self : QObj
             Base.
         n : int
             Power.
 
         Returns
         ----------
-        Qobj
+        QObj
             Input quantum object to the power of n.
         """
 
@@ -307,15 +307,15 @@ class Qobj():
         else:
             return __class__.from_csr(self.data**n)
 
-class CQobj:
+class CQObj:
     """
-    CQobj: Constructors for Quantum Objects
+    CQObj: Constructors for Quantum Objects
 
     Collection of constructors for quantum objects.
     """
 
     def zero(nrows: int,
-             ncols: int) -> "Qobj":
+             ncols: int) -> "QObj":
         """
         Zero operator.
 
@@ -328,16 +328,16 @@ class CQobj:
 
         Returns
         ----------
-        Qobj
+        QObj
             Zero operator.
         """
         if not nrows*ncols:
             message = "PYQUANT: DIMENSION CANNOT BE ZERO"
             raise ValueError(message)
         Z = scipy.sparse.csr_matrix((nrows, ncols), dtype=numpy.complex128)
-        return Qobj(Z, (nrows, ncols))
+        return QObj(Z, (nrows, ncols))
 
-    def one(dim: int) -> "Qobj":
+    def one(dim: int) -> "QObj":
         """
         Identity operator.
 
@@ -348,15 +348,15 @@ class CQobj:
 
         Returns
         ----------
-        Qobj
+        QObj
             Identity operator.
         """
         E = scipy.sparse.identity(dim,
                                   dtype=numpy.complex128,
                                   format="csr")
-        return Qobj(E, (dim, dim))
+        return QObj(E, (dim, dim))
 
-    def annihilator(dim: int) -> "Qobj":
+    def annihilator(dim: int) -> "QObj":
         """
         Bosonic annihilation operator.
 
@@ -367,7 +367,7 @@ class CQobj:
 
         Returns
         ----------
-        Qobj
+        QObj
             Annihilation operator.
         """
 
@@ -382,9 +382,9 @@ class CQobj:
                                           shape=(dim, dim),
                                           dtype=numpy.complex128)
 
-        return Qobj(result.tocsr(), (dim, dim))
+        return QObj(result.tocsr(), (dim, dim))
 
-    def creator(dim: int) -> "Qobj":
+    def creator(dim: int) -> "QObj":
         """
         Bosonic creation operator.
 
@@ -395,7 +395,7 @@ class CQobj:
 
         Returns
         ----------
-        Qobj
+        QObj
             Creation operator.
         """
 
@@ -409,9 +409,9 @@ class CQobj:
         result  = scipy.sparse.coo_matrix(entries, shape=(dim, dim),
                                           dtype=numpy.complex128)
 
-        return Qobj(result.tocsr(), (dim, dim))
+        return QObj(result.tocsr(), (dim, dim))
 
-    def number(dim: int) -> "Qobj":
+    def number(dim: int) -> "QObj":
         """
         Bosonic number operator.
 
@@ -422,7 +422,7 @@ class CQobj:
 
         Returns
         ----------
-        Qobj
+        QObj
             Number operator.
         """
 
@@ -437,9 +437,9 @@ class CQobj:
                                           shape=(dim, dim),
                                           dtype=numpy.complex128)
 
-        return Qobj(result.tocsr(), (dim, dim))
+        return QObj(result.tocsr(), (dim, dim))
 
-    def pauli(which: str) -> "Qobj":
+    def pauli(which: str) -> "QObj":
         """
         Pauli matrix.
 
@@ -450,7 +450,7 @@ class CQobj:
 
         Returns
         ----------
-        Qobj
+        QObj
             Pauli matrix.
         """
 
@@ -469,10 +469,10 @@ class CQobj:
                                   [  0,  -1]  ],
                                 dtype=numpy.complex128)
 
-        return Qobj(scipy.sparse.csr_matrix(sigma), (2, 2))
+        return QObj(scipy.sparse.csr_matrix(sigma), (2, 2))
 
     def proj(dim: int,
-             n: int) -> "Qobj":
+             n: int) -> "QObj":
         """
         Projection operator.
 
@@ -485,7 +485,7 @@ class CQobj:
 
         Returns
         ----------
-        Qobj
+        QObj
             Resulting projection operator. For example, if dim = 3 and n = 1, the
             result is a 3x3 matrix with 1 at (0,0) and 0 elsewhere.
         """
@@ -499,11 +499,11 @@ class CQobj:
                                          shape=shape,
                                          dtype=numpy.complex128)
 
-        return Qobj(result.tocsr(), (dim, dim))
+        return QObj(result.tocsr(), (dim, dim))
 
     def smfock(dim: int,
                n: int,
-               which: str) -> "Qobj":
+               which: str) -> "QObj":
         """
         Single mode Fock state.
 
@@ -518,7 +518,7 @@ class CQobj:
 
         Returns
         ----------
-        Qobj
+        QObj
             Truncated Fock state <n| or |n>.
         """
 
@@ -540,11 +540,11 @@ class CQobj:
                                          shape=shape,
                                          dtype=numpy.complex128)
 
-        return Qobj(result.tocsr(), shape)
+        return QObj(result.tocsr(), shape)
 
     def fock(dim: int,
              ns: list,
-             which: str) -> "Qobj":
+             which: str) -> "QObj":
         """
         Fock state.
 
@@ -559,17 +559,17 @@ class CQobj:
 
         Returns
         ----------
-        Qobj
+        QObj
             Fock state.
         """
-        result = CQobj.smfock(dim, ns[0], which).data
+        result = CQObj.smfock(dim, ns[0], which).data
         for n in ns[1:]:
-            result = scipy.sparse.kron(result, CQobj.smfock(dim, n, which).data)
-        return Qobj.from_csr(result.tocsr())
+            result = scipy.sparse.kron(result, CQObj.smfock(dim, n, which).data)
+        return QObj.from_csr(result.tocsr())
 
     def cs(dim: int,
            alpha: numpy.complex128,
-           which: str) -> "Qobj":
+           which: str) -> "QObj":
         """
         Coherent state.
 
@@ -584,20 +584,20 @@ class CQobj:
 
         Returns
         ----------
-        Qobj
+        QObj
             Coherent state in basis of Fock states.
         """
-        result = CQobj.zero(dim, 1)
+        result = CQObj.zero(dim, 1)
         for n in range(dim):
-            f = CQobj.smfock(dim, n, "ket")
+            f = CQObj.smfock(dim, n, "ket")
             s = alpha**n/numpy.sqrt(scipy.special.gamma(n+1))*f
             result = result + s
         result = numpy.exp(-numpy.abs(alpha)**2/2)*result
-        return result if which == "ket" else CQobj.dagger(result)
+        return result if which == "ket" else CQObj.dagger(result)
 
     def stdbv(dim: int,
               n: int,
-              which: str) -> "Qobj":
+              which: str) -> "QObj":
         """
         Standard basis vector.
 
@@ -612,10 +612,10 @@ class CQobj:
 
         Returns
         ----------
-        Qobj
+        QObj
             Standard basis vector (ket), or the dual one (bra).
         """
-        return CQobj.smfock(dim, n-1, which)
+        return CQObj.smfock(dim, n-1, which)
 
     def annihilators_list(dim: int,
                           number_of_modes: int) -> list:
@@ -637,7 +637,7 @@ class CQobj:
         """
 
         # Single mode annihilator
-        a = CQobj.annihilator(dim)
+        a = CQObj.annihilator(dim)
 
         # Check if something is to be done
         if not number_of_modes:
@@ -646,12 +646,12 @@ class CQobj:
             return [ a ]
 
         # Push modes to subspaces
-        result = [ OQobj.to_subspace(0, a, dim**(number_of_modes-1)) ]
+        result = [ OQObj.to_subspace(0, a, dim**(number_of_modes-1)) ]
         for i in range(1, number_of_modes-1):
-            result += [ OQobj.to_subspace(dim**i,
+            result += [ OQObj.to_subspace(dim**i,
                                           a,
                                           dim**(number_of_modes-i-1)) ]
-        result += [ OQobj.to_subspace(dim**(number_of_modes-1), a, 0) ]
+        result += [ OQObj.to_subspace(dim**(number_of_modes-1), a, 0) ]
 
         return result
 
@@ -675,7 +675,7 @@ class CQobj:
         """
 
         # Single mode creator
-        ad = CQobj.creator(dim)
+        ad = CQObj.creator(dim)
 
         # Check if something is to be done
         if not number_of_modes:
@@ -684,12 +684,12 @@ class CQobj:
             return [ ad ]
 
         # Push modes to subspaces
-        result = [ OQobj.to_subspace(0, ad, dim**(number_of_modes-1)) ]
+        result = [ OQObj.to_subspace(0, ad, dim**(number_of_modes-1)) ]
         for i in range(1, number_of_modes-1):
-            result += [ OQobj.to_subspace(dim**i,
+            result += [ OQObj.to_subspace(dim**i,
                                           ad,
                                           dim**(number_of_modes-i-1)) ]
-        result += [ OQobj.to_subspace(dim**(number_of_modes-1), ad, 0) ]
+        result += [ OQObj.to_subspace(dim**(number_of_modes-1), ad, 0) ]
 
         return result
 
@@ -713,7 +713,7 @@ class CQobj:
         """
 
         # Single mode number operator
-        n = CQobj.number(dim)
+        n = CQObj.number(dim)
 
         # Check if something is to be done
         if not number_of_modes:
@@ -722,12 +722,12 @@ class CQobj:
             return [ n ]
 
         # Push modes to subspaces
-        result = [ OQobj.to_subspace(0, n, dim**(number_of_modes-1)) ]
+        result = [ OQObj.to_subspace(0, n, dim**(number_of_modes-1)) ]
         for i in range(1, number_of_modes-1):
-            result += [ OQobj.to_subspace(dim**i,
+            result += [ OQObj.to_subspace(dim**i,
                                           n,
                                           dim**(number_of_modes-i-1)) ]
-        result += [ OQobj.to_subspace(dim**(number_of_modes-1), n, 0) ]
+        result += [ OQObj.to_subspace(dim**(number_of_modes-1), n, 0) ]
 
         return result
 
@@ -755,35 +755,35 @@ class CQobj:
             state = scipy.sparse.coo_matrix(entry,
                                             shape=shape,
                                             dtype=numpy.complex128)
-            state = Qobj(state.tocsr(), shape)
+            state = QObj(state.tocsr(), shape)
             basis.append(state)
 
         return basis
 
-class OQobj:
+class OQObj:
     """
-    OQobj: Operations on Quantum Objects
+    OQObj: Operations on Quantum Objects
 
     Collection of operations on quantum objects.
     """
 
-    def dagger(O: "Qobj") -> "Qobj":
+    def dagger(O: "QObj") -> "QObj":
         """
         Hermitian conjugate.
 
         Parameters
         ----------
-        O : Qobj
+        O : QObj
             Quantum object.
 
         Returns
         ----------
-        Qobj
+        QObj
             Hermitian conjugate of input.
         """
-        return Qobj.from_csr(O.data.getH().tocsr())
+        return QObj.from_csr(O.data.getH().tocsr())
 
-    def tp(Os: list) -> "Qobj":
+    def tp(Os: list) -> "QObj":
         """
         Tensor product.
 
@@ -794,26 +794,26 @@ class OQobj:
 
         Returns
         ----------
-        Qobj
+        QObj
             Tensor product of the input list's elements, from left to right.
         """
         result = Os[0].data
         for O in Os[1:]:
             result = scipy.sparse.kron(result, O.data)
-        return Qobj.from_csr(result.tocsr())
+        return QObj.from_csr(result.tocsr())
 
-    def dyad(ket: "Qobj") -> "Qobj":
+    def dyad(ket: "QObj") -> "QObj":
         """
         Dyadic product.
 
         Parameters
         ----------
-        ket : Qobj
+        ket : QObj
             Ket state.
 
         Returns
         ----------
-        Qobj
+        QObj
             Dyadic product of the input state with itself, i.e., |ket><ket|.
         """
         if ket.shape[1] != 1:
@@ -821,18 +821,18 @@ class OQobj:
             raise TypeError(message)
         else:
             dyad = scipy.sparse.kron(ket.data, ket.data.getH())
-            return Qobj.from_csr(dyad.tocsr())
+            return QObj.from_csr(dyad.tocsr())
 
-    def sp(phi: "Qobj",
-           psi: "Qobj") -> numpy.complex128:
+    def sp(phi: "QObj",
+           psi: "QObj") -> numpy.complex128:
         """
         Scalar product.
 
         Parameters
         ----------
-        phi : Qobj
+        phi : QObj
             Ket state.
-        psi : Qobj
+        psi : QObj
             Ket state.
 
         Returns
@@ -841,18 +841,18 @@ class OQobj:
             Scalar product between input states.
         """
         if phi.shape == psi.shape and phi.shape[1] == 1:
-            return (OQobj.dagger(phi) * psi).data.toarray()[0][0]
+            return (OQObj.dagger(phi) * psi).data.toarray()[0][0]
         else:
             message = "PYQUANT: INVALID INPUT GIVEN TO SCALAR PRODUCT"
             raise TypeError(message)
 
-    def trace(O: "Qobj") -> numpy.complex128:
+    def trace(O: "QObj") -> numpy.complex128:
         """
         Trace of an operator.
 
         Parameters
         ----------
-        O : Qobj
+        O : QObj
             Operator.
 
         Returns
@@ -867,8 +867,8 @@ class OQobj:
             raise TypeError(message)
 
     def to_subspace(dim1: int,
-                    O: "Qobj",
-                    dim2: int) -> "Qobj":
+                    O: "QObj",
+                    dim2: int) -> "QObj":
         """
         Push quadratic operator to a subspace.
 
@@ -876,14 +876,14 @@ class OQobj:
         ----------
         dim1 : int
             Dimension of identity before O.
-        O : Qobj
+        O : QObj
             Operator.
         dim2 : int
             Dimension of identity after O.
 
         Returns
         ----------
-        Qobj
+        QObj
             Tensor product of Edim1, A, and Edim2, in that order.
         """
 
@@ -896,11 +896,11 @@ class OQobj:
         if not dim1 and not dim2:
             return O
         elif not dim1:
-            return OQobj.tp([O, CQobj.one(dim2)])
+            return OQObj.tp([O, CQObj.one(dim2)])
         elif not dim2:
-            return OQobj.tp([CQobj.one(dim1), O])
+            return OQObj.tp([CQObj.one(dim1), O])
         else:
-            return OQobj.tp([CQobj.one(dim1), O, CQobj.one(dim2)])
+            return OQObj.tp([CQObj.one(dim1), O, CQObj.one(dim2)])
 
 class Spec:
     """
@@ -909,7 +909,7 @@ class Spec:
     Class of methods to compute spectra.
     """
 
-    def __check_square_compute_all(O: "Qobj",
+    def __check_square_compute_all(O: "QObj",
                                    howmany: (int, str)) -> bool:
         """
         Check if matrix is square and all eigenvalues and eigenvectors
@@ -917,7 +917,7 @@ class Spec:
 
         Parameters
         ----------
-        O : Qobj
+        O : QObj
             Quantum object.
         howmany : int, str
             Number of eigenvalues and eigenvectors to compute; can be "all".
@@ -940,7 +940,7 @@ class Spec:
         else:
             return False
 
-    def eigen_symm(O: "Qobj",
+    def eigen_symm(O: "QObj",
                    get_states: bool,
                    which: str,
                    sigma: numpy.float64,
@@ -950,7 +950,7 @@ class Spec:
 
         Parameters
         ----------
-        O : Qobj
+        O : QObj
             Symmetric operator. It is assumed that the imaginary part is zero,
             but there is NO INTERNAL CHECK, i.e., it is the caller's
             responsibility.
@@ -1006,7 +1006,7 @@ class Spec:
             else:
                 return result, []
 
-    def eigen_herm(O: "Qobj",
+    def eigen_herm(O: "QObj",
                    get_states: bool,
                    which: str,
                    sigma: numpy.float64,
@@ -1016,7 +1016,7 @@ class Spec:
 
         Parameters
         ----------
-        O : Qobj
+        O : QObj
             Hermitian operator.
         get_states : bool
             Decide if eigenvectors are computed.
@@ -1067,7 +1067,7 @@ class Spec:
             else:
                 return result, []
 
-    def eigen_gen_real(O: "Qobj",
+    def eigen_gen_real(O: "QObj",
                        get_states: bool,
                        which: str,
                        sigma: numpy.float64,
@@ -1077,7 +1077,7 @@ class Spec:
 
         Parameters
         ----------
-        O : Qobj
+        O : QObj
             Real operator. It is assumed that the imaginary part is zero, but
             there is NO INTERNAL CHECK, i.e., it is the caller's responsibility.
         get_states : bool
@@ -1133,7 +1133,7 @@ class Spec:
             else:
                 return result, []
 
-    def eigen_gen(O: "Qobj",
+    def eigen_gen(O: "QObj",
                   get_states: bool,
                   which: str,
                   sigma: numpy.float64,
@@ -1143,7 +1143,7 @@ class Spec:
 
         Parameters
         ----------
-        O : Qobj
+        O : QObj
             Operator.
         get_states : bool
             Decide if eigenvectors are computed.
@@ -1291,8 +1291,8 @@ class TEvol:
 
         return result.reshape((shape[0]*shape[1],), order='C', copy=False)
 
-    def uevol_expm(H: "Qobj",
-                   psi0: "Qobj",
+    def uevol_expm(H: "QObj",
+                   psi0: "QObj",
                    times: numpy.array,
                    get_states: (bool, str),
                    observables: list,
@@ -1302,9 +1302,9 @@ class TEvol:
 
         Parameters
         ----------
-        H : Qobj
+        H : QObj
             Quantum object representing the time-independent Hamiltonian.
-        psi0 : Qobj
+        psi0 : QObj
             Initial state.
         times : ndarray
             Time points of interest.
@@ -1408,7 +1408,7 @@ class TEvol:
         return times, states, expects
 
     def uevol_ode(Hlst: list,
-                  psi0: "Qobj",
+                  psi0: "QObj",
                   times: numpy.array,
                   get_states: bool,
                   is_stiff: bool,
@@ -1426,7 +1426,7 @@ class TEvol:
             functions of time. The Hamiltonian is constructed as follows:
             Htot(t) = H0 + f(1)*H1 + f2(t)*H2 + ... . Note that Hlst = [ H0 ] is
             valid and yields a time-independent Hamiltonian.
-        psi0 : Qobj
+        psi0 : QObj
             Initial state.
         times : ndarray
             Time points of interest.
@@ -1469,7 +1469,7 @@ class TEvol:
         l = len(Hlst)
 
         # Extract data of Hamiltonians
-        h0 = Hlst[0].data if h0_exists else CQobj.zero(*Hlst[0][1].shape).data
+        h0 = Hlst[0].data if h0_exists else CQObj.zero(*Hlst[0][1].shape).data
         i = 1 if h0_exists else 0
         hs = []; fs = []
         while i < l:
@@ -1565,7 +1565,7 @@ class TEvol:
 
     def devol_lindblad(Hlst: list,
                        Llst: list,
-                       rho0: "Qobj",
+                       rho0: "QObj",
                        times: numpy.array,
                        get_states: bool,
                        is_stiff: bool,
@@ -1588,7 +1588,7 @@ class TEvol:
             List of scaled jump operators: sqrt(gamma_i)Li, with the rate gammai
             associated to the jump operator Li. sqrt(gamma_1)L_1,
             sqrt(gamma_2)L_2, ... must be quantum objects.
-        rho0 : Qobj
+        rho0 : QObj
             Initial state.
         times : ndarray
             Time points of interest.
@@ -1634,7 +1634,7 @@ class TEvol:
         l = len(Hlst)
 
         # Extract data of Hamiltonians
-        h0 = Hlst[0].data if h0_exists else CQobj.zero(*Llst[0].shape).data
+        h0 = Hlst[0].data if h0_exists else CQObj.zero(*Llst[0].shape).data
         i = 1 if h0_exists else 0
         hs = []; fs = []
         while (i<l):
@@ -1738,7 +1738,7 @@ class QOPS:
     Class of methods to work with quantum optical phase space quantities.
     """
 
-    def wigner_fock(rho: "Qobj",
+    def wigner_fock(rho: "QObj",
                     alpha: numpy.complex128) -> numpy.float64:
         """
         Wigner quasiprobability distribution for a density matrix in the Fock
@@ -1746,7 +1746,7 @@ class QOPS:
 
         Parameters
         ----------
-        rho : Qobj
+        rho : QObj
             State in Fock basis.
         alpha : complex128
             Argument of Wigner quasiprobability distribution.
